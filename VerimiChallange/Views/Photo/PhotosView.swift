@@ -127,7 +127,7 @@ struct PhotosView: View {
                         }
                     }
                     .task {
-                        if viewModel.shouldLoadNextPage(models: photos, model: model) {
+                        if viewModel.shouldLoadNextPage(lastModel: photos.last, model: model) {
                             await viewModel.loadNewPage()
                         }
                     }

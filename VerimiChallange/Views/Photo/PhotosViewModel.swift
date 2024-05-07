@@ -60,12 +60,8 @@ final class PhotosViewModel: Coordinator {
         try await photoRepository.getPhotos(page: currentPage, limit: Constants.pageSize)
     }
 
-    func shouldLoadNextPage(models: [PhotoWrapper], model: PhotoWrapper) -> Bool {
-        if let lastModel = models.last, lastModel == model {
-            return true
-        } else {
-            return false
-        }
+    func shouldLoadNextPage(lastModel: PhotoWrapper?, model: PhotoWrapper) -> Bool {
+        lastModel == model
     }
 
     @MainActor
