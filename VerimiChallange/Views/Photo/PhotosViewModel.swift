@@ -12,8 +12,6 @@ import SwiftData
 final class PhotosViewModel: Coordinator {
     private let photoRepository: PhotoRepositoryProtocol
     private let photoDataRepository: PhotoDataRepositoryProtocol
-    private let maxPhotos = 5000
-    private let pageSize = 60
 
     @ObservationIgnored @AppStorage("currentPage") var currentPage: Int = 1
     var isLoading = false
@@ -59,7 +57,7 @@ final class PhotosViewModel: Coordinator {
     }
 
     func getPhotos() async throws -> [Photo] {
-        try await photoRepository.getPhotos(page: currentPage, limit: pageSize)
+        try await photoRepository.getPhotos(page: currentPage, limit: Constants.pageSize)
     }
 
     func shouldLoadNextPage(models: [PhotoWrapper], model: PhotoWrapper) -> Bool {
@@ -73,7 +71,7 @@ final class PhotosViewModel: Coordinator {
     @MainActor
     func loadNewPage()  {
         Task {
-            let maxPages = maxPhotos/pageSize
+            let maxPages = Constants.maxPhotos/Constants.pageSize
             guard currentPage <= maxPages else {
                 return
             }
